@@ -1,0 +1,16 @@
+package repositories;
+
+import models.Customer;
+import models.Sale;
+import models.SaleItem;
+
+import java.time.LocalDate;
+import java.util.List;
+
+public interface SaleRepository {
+    Sale createSale(Customer customer, List<SaleItem> saleItems);
+    Sale findById(int id);
+    List<Sale> findAll();
+    List<Sale> findByDate(LocalDate date);
+    List<Sale> findByDateRange(LocalDate from, LocalDate to);
+}
