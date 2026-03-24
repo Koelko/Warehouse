@@ -37,12 +37,12 @@ public class StockService {
             throw new IllegalArgumentException("Нет такого склада");
         }
         for (StockItem stockItem : inMemoryStockRepository.findAll()){
-            if (stockItem.getProduct().getId() == productId && stockItem.getSupplier().getId() == supplierId){
+            if (stockItem.getProductId() == productId && stockItem.getSupplierId() == supplierId && stockItem.getWarehouseId() == warehouseId){
                 stockItem.setCount(stockItem.getCount() + count);
                 return;
             }
         }
-        inMemoryStockRepository.createStockItem(count, product, supplier, warehouse);
+        inMemoryStockRepository.createStockItem(count, productId, supplierId, warehouseId);
     }
     public void sell(int productId, int customerId, int warehouseId, int count){
         Product product = inMemoryProductRepository.findById(productId);
@@ -58,8 +58,8 @@ public class StockService {
             throw new IllegalArgumentException("Нет такого склада");
         }
         List<StockItem> batches = inMemoryStockRepository.findAll().stream()
-                .filter(item -> item.getProduct().getId() == productId)
-                .filter(item -> item.getWarehouse().getId() == warehouseId)
+                .filter(item -> item.getProductId() == productId)
+                .filter(item -> item.getWarehouseId() == warehouseId)
                 .collect(Collectors.toList());
         int total = batches.stream().mapToInt(StockItem::getCount).sum();
         if (total < count) {

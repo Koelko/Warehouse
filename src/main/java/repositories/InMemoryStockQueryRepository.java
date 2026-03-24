@@ -13,7 +13,7 @@ public class InMemoryStockQueryRepository implements StockQueryRepository{
     public List<StockItem> findByProductId(int productId){
         List<StockItem> result = new ArrayList<>();
         for (StockItem stockItem : inMemoryStockRepository.findAll()) {
-            if (stockItem.getProduct().getId() == productId){
+            if (stockItem.getProductId() == productId){
                 result.add(stockItem);
             }
         }
@@ -22,7 +22,7 @@ public class InMemoryStockQueryRepository implements StockQueryRepository{
     public List<StockItem> findBySupplierId (int supplierId){
         List<StockItem> result = new ArrayList<>();
         for (StockItem stockItem : inMemoryStockRepository.findAll()) {
-            if (stockItem.getSupplier().getId() == supplierId){
+            if (stockItem.getSupplierId() == supplierId){
                 result.add(stockItem);
             }
         }
@@ -31,7 +31,7 @@ public class InMemoryStockQueryRepository implements StockQueryRepository{
     public int getTotalCount(int productId){
         int total = 0;
         for (StockItem stockItem : inMemoryStockRepository.findAll()) {
-            if (stockItem.getProduct().getId() == productId){
+            if (stockItem.getProductId() == productId){
                 total += stockItem.getCount();
             }
         }

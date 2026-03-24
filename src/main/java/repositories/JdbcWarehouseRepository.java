@@ -40,7 +40,7 @@ public class JdbcWarehouseRepository implements WarehouseRepository {
                 return warehouse;
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Ошибка при созданиии класса", e);
+            throw new RuntimeException("Ошибка при созданиии склада", e);
         }
     }
 

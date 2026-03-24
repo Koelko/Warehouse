@@ -3,9 +3,9 @@ package models;
 public class StockItem {
     private int id;
     private int count;
-    private Product product;
-    private Supplier supplier;
-    private Warehouse warehouse;
+    private int productId;
+    private int supplierId;
+    private int warehouseId;
 
     public int getId() {
         return id;
@@ -15,16 +15,16 @@ public class StockItem {
         return count;
     }
 
-    public Product getProduct() {
-        return product;
+    public int getProductId() {
+        return productId;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public int getSupplierId() {
+        return supplierId;
     }
 
-    public Warehouse getWarehouse() {
-        return warehouse;
+    public int getWarehouseId() {
+        return warehouseId;
     }
     public void setCount(int count) {
         if (count > 0){
@@ -34,46 +34,46 @@ public class StockItem {
         }
     }
 
-    public void setProduct(Product product) {
-        if (product != null) {
-            this.product = product;
+    public void setProductId(int productId) {
+        if (productId > 0) {
+            this.productId = productId;
         } else{
-            throw new IllegalArgumentException("Продукт должен быть");
+            throw new IllegalArgumentException("Id не может быть отрицательным");
         }
     }
 
-    public void setSupplier(Supplier supplier) {
-        if (supplier != null) {
-            this.supplier = supplier;
+    public void setSupplierId(int supplierId) {
+        if (supplierId > 0) {
+            this.supplierId = supplierId;
         } else{
-            throw new IllegalArgumentException("Поставщик должен быть");
+            throw new IllegalArgumentException("Id не может быть отрицательным");
         }
     }
 
-    public void setWarehouse(Warehouse warehouse) {
-        if (warehouse == null){
-            throw new IllegalArgumentException("Склад должен быть");
+    public void setWarehouseId(int warehouse) {
+        if (warehouse <= 0){
+            throw new IllegalArgumentException("Id не может быть отрицательным");
         }
-        this.warehouse = warehouse;
+        this.warehouseId = warehouseId;
     }
 
-    public StockItem(int id, int count, Product product, Supplier supplier, Warehouse warehouse) {
-        if(count < 0){
+    public StockItem(int id, int count, int productId, int supplierId, int warehouseId) {
+        if(count <= 0){
             throw new IllegalArgumentException("Количество не может быть отрицательным");
         }
-        if (product == null){
+        if (productId <= 0){
             throw new IllegalArgumentException("Продукт должен быть");
         }
-        if (supplier == null){
+        if (supplierId <= 0){
             throw new IllegalArgumentException("Поставщик должен быть");
         }
-        if (warehouse == null){
+        if (warehouseId <= 0){
             throw new IllegalArgumentException("Склад должен быть");
         }
         this.id = id;
         this.count = count;
-        this.product = product;
-        this.supplier = supplier;
-        this.warehouse = warehouse;
+        this.productId = productId;
+        this.supplierId = supplierId;
+        this.warehouseId = warehouseId;
     }
 }

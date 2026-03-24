@@ -9,17 +9,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class InMemoryStockRepository implements StockRepository{
     private List<StockItem> stockItems = new CopyOnWriteArrayList<>();
     private int nextId = 1;
-    private InMemoryProductRepository inMemoryProductRepository;
-    private InMemorySupplierRepository inMemorySupplierRepository;
-    private InMemoryWarehouseRepository inMemoryWarehouseRepository;
+    public InMemoryStockRepository() {
 
-    public InMemoryStockRepository(InMemoryProductRepository inMemoryProductRepository, InMemorySupplierRepository inMemorySupplierRepository, InMemoryWarehouseRepository inMemoryWarehouseRepository) {
-        this.inMemoryProductRepository = inMemoryProductRepository;
-        this.inMemorySupplierRepository = inMemorySupplierRepository;
-        this.inMemoryWarehouseRepository = inMemoryWarehouseRepository;
     }
-    public StockItem createStockItem(int count, Product product, Supplier supplier, Warehouse warehouse){
-        StockItem stockItem =  new StockItem(nextId++, count, product, supplier, warehouse);
+    public StockItem createStockItem(int count, int productId, int supplierId, int warehouseId){
+        StockItem stockItem =  new StockItem(nextId++, count, productId, supplierId, warehouseId);
         stockItems.add(stockItem);
         return stockItem;
     }
