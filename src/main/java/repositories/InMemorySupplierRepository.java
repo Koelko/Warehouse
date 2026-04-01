@@ -9,6 +9,9 @@ public class InMemorySupplierRepository implements SupplierRepository{
     private List<Supplier> suppliers = new CopyOnWriteArrayList<>();
     private int nextId = 1;
     public Supplier createSupplier(String name, String contactInfo){
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Имя поставщика не может быть пустым");
+        }
         Supplier supplier =  new Supplier(nextId++, name, contactInfo);
         suppliers.add(supplier);
         return supplier;

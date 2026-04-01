@@ -5,10 +5,11 @@ import models.Sale;
 import models.SaleItem;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SaleRepository {
-    Sale createSale(Customer customer, List<SaleItem> saleItems);
+    Sale createSale(int customerId, List<SaleItem> saleItems);
     Sale findById(int id);
     List<Sale> findAll();
     List<Sale> findByDate(LocalDate date);

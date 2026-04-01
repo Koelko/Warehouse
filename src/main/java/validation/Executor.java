@@ -19,12 +19,12 @@ public class Executor extends Validator{
         if (context.getSupplier() != null){
             Supplier supplier = context.getSupplier();
             for (StockItem stockItem : stockRepository.findAll()){
-                if (stockItem.getProduct().getId() == product.getId() && stockItem.getSupplier().getId() == supplier.getId() && stockItem.getWarehouse().getId() == warehouse.getId()){
+                if (stockItem.getProductId() == product.getId() && stockItem.getSupplierId() == supplier.getId() && stockItem.getWarehouseId() == warehouse.getId()){
                     stockItem.setCount(stockItem.getCount() + count);
                     return;
                 }
             }
-            stockRepository.createStockItem(count, product, supplier, warehouse);
+           // stockRepository.createStockItem(count, productId, supplierId, warehouseId);
         }
         else if (context.getCustomer() != null){
             Customer customer = context.getCustomer();

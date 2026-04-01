@@ -1,26 +1,23 @@
 package services;
 
 import models.Customer;
-import repositories.InMemoryCustomerRepository;
+import repositories.CustomerRepository;
 
 import java.util.List;
 
 public class CustomerService {
-    private InMemoryCustomerRepository inMemoryCustomerRepository;
+    private CustomerRepository customerRepository;
 
-    public CustomerService(InMemoryCustomerRepository inMemoryCustomerRepository) {
-        this.inMemoryCustomerRepository = inMemoryCustomerRepository;
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
     public Customer createCustomer(String name, String contactInfo){
-        return inMemoryCustomerRepository.createCustomer(name, contactInfo);
+        return customerRepository.createCustomer(name, contactInfo);
     }
     public Customer findById(int id){
-        return inMemoryCustomerRepository.findById(id);
+        return customerRepository.findById(id);
     }
     public List<Customer> findAll(){
-        return inMemoryCustomerRepository.findAll();
-    }
-    public void remove(int id){
-        inMemoryCustomerRepository.remove(id);
+        return customerRepository.findAll();
     }
 }

@@ -1,26 +1,26 @@
 package services;
 
 import models.Supplier;
-import repositories.InMemorySupplierRepository;
+import repositories.SupplierRepository;
 
 import java.util.List;
 
 public class SupplierService {
-    private InMemorySupplierRepository inMemorySupplierRepository;
+    private SupplierRepository supplierRepository;
 
-    public SupplierService(InMemorySupplierRepository inMemorySupplierRepository) {
-        this.inMemorySupplierRepository = inMemorySupplierRepository;
+    public SupplierService(SupplierRepository supplierRepository) {
+        this.supplierRepository = supplierRepository;
     }
     public Supplier createSupplier(String name, String contactInfo){
-        return inMemorySupplierRepository.createSupplier(name, contactInfo);
+        return supplierRepository.createSupplier(name, contactInfo);
     }
     public Supplier findById(int id){
-        return inMemorySupplierRepository.findById(id);
+        return supplierRepository.findById(id);
     }
     public List<Supplier> findAll() {
-       return inMemorySupplierRepository.findAll();
+       return supplierRepository.findAll();
     }
     public void remove(int id){
-        inMemorySupplierRepository.remove(id);
+        supplierRepository.remove(id);
     }
 }

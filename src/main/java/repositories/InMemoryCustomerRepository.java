@@ -10,6 +10,9 @@ public class InMemoryCustomerRepository implements CustomerRepository{
     private List<Customer> customers = new CopyOnWriteArrayList<>();
     private int nextId = 1;
     public Customer createCustomer(String name, String contactInfo){
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Имя покупателя не может быть пустым");
+        }
         Customer customer =  new Customer(nextId++, name, contactInfo);
         customers.add(customer);
         return customer;

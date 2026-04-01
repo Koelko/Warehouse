@@ -15,8 +15,8 @@ public class InMemorySaleRepository implements SaleRepository{
     private List<Sale> sales = new CopyOnWriteArrayList<>();
     private int nextId = 1;
 
-    public Sale createSale(Customer customer, List<SaleItem> saleItems){
-        Sale sale = new Sale(nextId++, LocalDateTime.now(),customer, saleItems);
+    public Sale createSale( int customerId, List<SaleItem> saleItems){
+        Sale sale = new Sale(nextId++, LocalDateTime.now(), customerId, saleItems);
         sales.add(sale);
         return sale;
     }
@@ -34,7 +34,7 @@ public class InMemorySaleRepository implements SaleRepository{
     public List<Sale> findByCustomer(int customerId){
         List<Sale> result = new ArrayList<>();
         for (Sale sale : sales){
-            if (sale.getCustomer().getId() == customerId){
+            if (sale.getCustomerId() == customerId){
                 result.add(sale);
             }
         }

@@ -4,16 +4,17 @@ import java.math.BigDecimal;
 
 public class SaleItem {
     private int id;
-    private Product product;
+    private int productId;
     private int count;
     private BigDecimal priceAtSale;
+    private int warehouseId;
 
     public int getId() {
         return id;
     }
 
-    public Product getProduct() {
-        return product;
+    public int getProductId() {
+        return productId;
     }
 
     public int getCount() {
@@ -23,12 +24,10 @@ public class SaleItem {
     public BigDecimal getPriceAtSale() {
         return priceAtSale;
     }
+    public int getWarehouseId() {return warehouseId;}
 
-    public void setProduct(Product product) {
-        if (product == null) {
-            throw new IllegalArgumentException("Товар должен быть указан");
-        }
-        this.product = product;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public void setCount(int count) {
@@ -44,11 +43,11 @@ public class SaleItem {
         }
         this.priceAtSale = priceAtSale;
     }
+    public void setWarehouseId(int warehouseId){
+        this.warehouseId = warehouseId;
+    }
 
-    public SaleItem(int id, Product product, int count, BigDecimal priceAtSale) {
-        if (product == null) {
-            throw new IllegalArgumentException("Товар должен быть указан");
-        }
+    public SaleItem(int id, int productId, int count, BigDecimal priceAtSale, int warehouseId) {
         if (count <= 0) {
             throw new IllegalArgumentException("Количество должено быть положительным числом");
         }
@@ -56,9 +55,10 @@ public class SaleItem {
             throw new IllegalArgumentException("Цена должена быть положительным числом");
         }
         this.id = id;
-        this.product = product;
+        this.productId = productId;
         this.count = count;
         this.priceAtSale = priceAtSale;
+        this.warehouseId = warehouseId;
     }
 
     public BigDecimal getSubtotal(){

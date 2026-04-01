@@ -7,7 +7,7 @@ import java.util.List;
 public class Sale {
     private int id;
     private LocalDateTime date;
-    private Customer customer;
+    private int customerId;
     private List<SaleItem> saleItems;
 
     public int getId() {
@@ -16,8 +16,8 @@ public class Sale {
     public LocalDateTime getDate() {
         return date;
     }
-    public Customer getCustomer() {
-        return customer;
+    public int getCustomerId() {
+        return customerId;
     }
     public List<SaleItem> getSaleItems() {
         return saleItems;
@@ -32,11 +32,8 @@ public class Sale {
         this.date = date;
     }
 
-    public void setCustomer(Customer customer) {
-        if (customer == null){
-            throw new IllegalArgumentException("Покупатель должен быть указан");
-        }
-        this.customer = customer;
+    public void setCustomer(int customerId) {
+        this.customerId = customerId;
     }
 
     public void setSaleItems(List<SaleItem> saleItems) {
@@ -46,19 +43,16 @@ public class Sale {
         this.saleItems = saleItems;
     }
 
-    public Sale(int id, LocalDateTime date, Customer customer, List<SaleItem> saleItems) {
+    public Sale(int id, LocalDateTime date, int customerId, List<SaleItem> saleItems) {
         if (date == null){
             throw new IllegalArgumentException("Дата должна быть указана");
-        }
-        if (customer == null){
-            throw new IllegalArgumentException("Покупатель должен быть указан");
         }
         if (saleItems == null || saleItems.isEmpty()){
             throw new IllegalArgumentException("Товары должены быть указаны");
         }
         this.id = id;
         this.date = date;
-        this.customer = customer;
+        this.customerId = customerId;
         this.saleItems = saleItems;
     }
 }

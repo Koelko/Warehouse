@@ -8,25 +8,25 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InMemoryProductQueryRepository implements ProductQueryRepository{
-    private InMemoryProductRepository inMemoryProductRepository;
+    private ProductRepository productRepository;
 
-    public InMemoryProductQueryRepository(InMemoryProductRepository inMemoryProductRepository) {
-        this.inMemoryProductRepository = inMemoryProductRepository;
+    public InMemoryProductQueryRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
     public List<Product> findByCategory(String category){
-        return inMemoryProductRepository.findAll().stream().filter(p -> p.getCategory().equalsIgnoreCase(category)).collect(Collectors.toList());
+        return productRepository.findAll().stream().filter(p -> p.getCategory().equalsIgnoreCase(category)).collect(Collectors.toList());
     }
     public List<Product> findByManufacturer(String manufacturer){
-        return inMemoryProductRepository.findAll().stream().filter(p -> p.getManufacturer().equalsIgnoreCase(manufacturer)).collect(Collectors.toList());
+        return productRepository.findAll().stream().filter(p -> p.getManufacturer().equalsIgnoreCase(manufacturer)).collect(Collectors.toList());
     }
     public List<Product> findByPriceRange(BigDecimal minPrice, BigDecimal maxPrice){
-        return inMemoryProductRepository.findAll().stream().filter(p -> p.getPrice().compareTo(minPrice)>=0).filter(p -> p.getPrice().compareTo(maxPrice)<=0).collect(Collectors.toList());
+        return productRepository.findAll().stream().filter(p -> p.getPrice().compareTo(minPrice)>=0).filter(p -> p.getPrice().compareTo(maxPrice)<=0).collect(Collectors.toList());
     }
     public List<Product> findByName(String name){
-        return inMemoryProductRepository.findAll().stream().filter(p -> p.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
+        return productRepository.findAll().stream().filter(p -> p.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
     }
     public List<Product> findByFilters(String name, String category, String manufacturer, BigDecimal minPrice, BigDecimal maxPrice){
-        return inMemoryProductRepository.findAll().stream().filter(p -> p != null)
+        return productRepository.findAll().stream().filter(p -> p != null)
                 .filter(p -> name == null || p.getName().toLowerCase().contains(name.toLowerCase()))
                 .filter(p -> category == null || p.getCategory().equalsIgnoreCase(category))
                 .filter(p -> manufacturer == null || p.getManufacturer().equalsIgnoreCase(manufacturer))
@@ -35,6 +35,6 @@ public class InMemoryProductQueryRepository implements ProductQueryRepository{
                 .collect(Collectors.toList());
     }
     public Map<String, List<Product>> groupByCategory(){
-        return inMemoryProductRepository.findAll().stream().collect(Collectors.groupingBy(Product::getCategory));
+        return productRepository.findAll().stream().collect(Collectors.groupingBy(Product::getCategory));
     }
 }

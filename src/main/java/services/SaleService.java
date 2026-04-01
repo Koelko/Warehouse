@@ -3,46 +3,47 @@ package services;
 import models.*;
 import repositories.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SaleService {
-    private InMemorySaleRepository inMemorySaleRepository;
+    private SaleRepository saleRepository;
     private StockService stockService;
-    private InMemoryProductRepository inMemoryProductRepository;
-    private InMemoryCustomerRepository inMemoryCustomerRepository;
-    private InMemoryWarehouseRepository inMemoryWarehouseRepository;
+    private ProductRepository productRepository;
+    private CustomerRepository customerRepository;
+    private WarehouseRepository warehouseRepository;
 
-    public SaleService(InMemorySaleRepository inMemorySaleRepository,
+    public SaleService(SaleRepository saleRepository,
                        StockService stockService,
-                       InMemoryProductRepository inMemoryProductRepository,
-                       InMemoryCustomerRepository inMemoryCustomerRepository,
-                       InMemoryWarehouseRepository inMemoryWarehouseRepository) {
-        this.inMemorySaleRepository = inMemorySaleRepository;
+                       ProductRepository productRepository,
+                       CustomerRepository customerRepository,
+                       WarehouseRepository warehouseRepository) {
+        this.saleRepository = saleRepository;
         this.stockService = stockService;
-        this.inMemoryProductRepository = inMemoryProductRepository;
-        this.inMemoryCustomerRepository = inMemoryCustomerRepository;
-        this.inMemoryWarehouseRepository = inMemoryWarehouseRepository;
+        this.productRepository = productRepository;
+        this.customerRepository = customerRepository;
+        this.warehouseRepository = warehouseRepository;
     }
 
     public Sale sell(int productId, int customerId, int warehouseId, int count) {
-        Product product = inMemoryProductRepository.findById(productId);
+        Product product = productRepository.findById(productId);
         if (product == null) {
             throw new IllegalArgumentException("Товар не найден");
         }
 
-        Customer customer = inMemoryCustomerRepository.findById(customerId);
+        Customer customer = customerRepository.findById(customerId);
         if (customer == null) {
             throw new IllegalArgumentException("Покупатель не найден");
         }
         stockService.sell(productId, customerId, warehouseId, count);
-        return inMemorySaleRepository.createSale(customer, createSaleItems(product, count));
+        return saleRepository.createSale(customerId, createSaleItems(product, count, warehouseId));
     }
 
-    private List<SaleItem> createSaleItems(Product product, int count) {
+    private List<SaleItem> createSaleItems(Product product, int count, int warehouseId) {
         List<SaleItem> items = new ArrayList<>();
-        items.add(new SaleItem(0, product, count, product.getPrice()));
+        items.add(new SaleItem(0, product.getId(), count, product.getPrice(), warehouseId));
         return items;
     }
-    public List<Sale> getAll(){return inMemorySaleRepository.findAll();}
+    public List<Sale> getAll(){return saleRepository.findAll();}
 }

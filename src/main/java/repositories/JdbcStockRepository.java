@@ -13,7 +13,7 @@ public class JdbcStockRepository implements StockRepository {
         if (count <= 0) {
             throw new IllegalArgumentException("Ошибка неправильное количество");
         }
-        if (productId <=0 ) {
+        if (productId <= 0) {
             throw new IllegalArgumentException("Ошибка, продукт не может быть пустым");
         }
         if (supplierId <= 0) {
@@ -36,14 +36,12 @@ public class JdbcStockRepository implements StockRepository {
             int id = generatedKeys.getInt(1);
             StockItem stockItem = new StockItem(id, count, productId, supplierId, warehouseId);
             return stockItem;
-    } catch(
-    SQLException e)
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
 
-    {
-        throw new RuntimeException(e);
     }
-
-}
 
     @Override
     public StockItem update(StockItem stockItem) {
@@ -77,10 +75,10 @@ public class JdbcStockRepository implements StockRepository {
     @Override
     public StockItem findById(int id) {
         String sql = "select * from stockitem where id = ?";
-        try(Connection connection = DatabaseConfig.getConnection(); PreparedStatement pS = connection.prepareStatement(sql)){
+        try (Connection connection = DatabaseConfig.getConnection(); PreparedStatement pS = connection.prepareStatement(sql)) {
             pS.setInt(1, id);
-            try(ResultSet result = pS.executeQuery()){
-                if (!result.next()){
+            try (ResultSet result = pS.executeQuery()) {
+                if (!result.next()) {
                     throw new IllegalArgumentException("Ошибка, покупателя нет");
                 }
                 int foundId = result.getInt(1);
