@@ -3,10 +3,11 @@ package repositories;
 import models.Supplier;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SupplierRepository {
     Supplier createSupplier(String name, String contactInfo);
-    void remove(int id);
+    Supplier update(Supplier supplier);
     List<Supplier> findAll();
-    Supplier findById(int id);
+    Optional<Supplier> findById(int id);
 }

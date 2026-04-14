@@ -4,6 +4,7 @@ import models.Warehouse;
 import repositories.WarehouseRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class WarehouseService {
     private WarehouseRepository warehouseRepository;
@@ -16,11 +17,14 @@ public class WarehouseService {
         return warehouseRepository.createWarehouse(name, address);
     }
 
-    public Warehouse findById(int id) {
+    public Optional<Warehouse> findById(int id) {
         return warehouseRepository.findById(id);
     }
 
     public List<Warehouse> findAll() {
         return warehouseRepository.findAll();
+    }
+    public Warehouse update(Warehouse warehouse){
+        return warehouseRepository.update(warehouse);
     }
 }

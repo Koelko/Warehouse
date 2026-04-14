@@ -27,12 +27,12 @@ public class SaleService {
     }
 
     public Sale sell(int productId, int customerId, int warehouseId, int count) {
-        Product product = productRepository.findById(productId);
+        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Товар с id=" + productId + " не найден"));;
         if (product == null) {
             throw new IllegalArgumentException("Товар не найден");
         }
 
-        Customer customer = customerRepository.findById(customerId);
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new IllegalArgumentException("Покупатель с id=" + customerId + " не найден"));;
         if (customer == null) {
             throw new IllegalArgumentException("Покупатель не найден");
         }

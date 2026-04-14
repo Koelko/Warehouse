@@ -1,11 +1,13 @@
 package services;
 
+import com.mysql.cj.x.protobuf.MysqlxCursor;
 import models.Product;
 import repositories.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ProductService {
     private ProductRepository productRepository;
@@ -18,7 +20,7 @@ public class ProductService {
     public Product createProduct(String name, String category, BigDecimal price, String manufacturer){
         return productRepository.createProduct(name, category, price, manufacturer);
     }
-    public Product findById(int id){
+    public Optional<Product> findById(int id){
         return productRepository.findById(id);
     }
     public List<Product> findAll(){
@@ -36,5 +38,6 @@ public class ProductService {
     public List<Product> findByCategory(String category){
         return productQueryRepository.findByCategory(category);
     }
+    public Product update(Product product){ return productRepository.update(product);}
 }
 

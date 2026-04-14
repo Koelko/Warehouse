@@ -4,6 +4,7 @@ import models.Customer;
 import repositories.CustomerRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CustomerService {
     private CustomerRepository customerRepository;
@@ -14,10 +15,13 @@ public class CustomerService {
     public Customer createCustomer(String name, String contactInfo){
         return customerRepository.createCustomer(name, contactInfo);
     }
-    public Customer findById(int id){
+    public Optional<Customer> findById(int id){
         return customerRepository.findById(id);
     }
     public List<Customer> findAll(){
         return customerRepository.findAll();
+    }
+    public Customer update(Customer customer){
+        return customerRepository.update(customer);
     }
 }

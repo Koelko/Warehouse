@@ -4,6 +4,7 @@ import models.Supplier;
 import repositories.SupplierRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SupplierService {
     private SupplierRepository supplierRepository;
@@ -14,13 +15,13 @@ public class SupplierService {
     public Supplier createSupplier(String name, String contactInfo){
         return supplierRepository.createSupplier(name, contactInfo);
     }
-    public Supplier findById(int id){
+    public Optional<Supplier> findById(int id){
         return supplierRepository.findById(id);
     }
     public List<Supplier> findAll() {
        return supplierRepository.findAll();
     }
-    public void remove(int id){
-        supplierRepository.remove(id);
+    public Supplier update(Supplier supplier){
+        return supplierRepository.update(supplier);
     }
 }

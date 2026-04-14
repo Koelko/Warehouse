@@ -87,7 +87,7 @@ public class ConsoleUI {
     private void findProductById() {
         int id = reader.readInt("Введите номер товара");
         try{
-            Product product = productService.findById(id);
+            Product product = productService.findById(id).orElseThrow(() -> new IllegalArgumentException("Товар не найден"));
             List<Product> productList = List.of(product);
             write.writeTable("Результаты поиска", productList, List.of("Номер", "Название", "Категория", "Цена", "Производитель"),
                     p -> p.getId() + " | " + p.getName() + " | " + p.getCategory() + " | " + p.getPrice() + " | " + p.getManufacturer()        );
@@ -129,7 +129,7 @@ public class ConsoleUI {
     private void findCustomerById(){
         int id = reader.readInt("Введите id");
         try {
-            Customer customer = customerService.findById(id);
+            Customer customer = customerService.findById(id).orElseThrow(() -> new IllegalArgumentException("Покупатель не найден"));
             List<Customer> customerList = List.of(customer);
             write.writeTable(
                     "Результаты поиска", customerList, List.of("Номер", "Фио/Название", "Контактная информация"),
@@ -172,7 +172,7 @@ public class ConsoleUI {
     private void findSupplierById(){
         int id = reader.readInt("Введите номер поставщика ");
         try {
-            Supplier supplier = supplierService.findById(id);
+            Supplier supplier = supplierService.findById(id).orElseThrow(()->new IllegalArgumentException("Поставщик не найден"));
             List<Supplier> supplierList = List.of(supplier);
             write.writeTable(
                     "Результаты поиска", supplierList, List.of("Номер", "Фио/Название", "Контактная информация"),
@@ -214,7 +214,7 @@ public class ConsoleUI {
     private void findWarehouseById(){
         int id = reader.readInt("Введите номер склада");
         try {
-            Warehouse warehouse = warehouseService.findById(id);
+            Warehouse warehouse = warehouseService.findById(id).orElseThrow(()-> new IllegalArgumentException("Склад не найден"));
             List<Warehouse> warehouseList = List.of(warehouse);
             write.writeTable(
                     "Результаты поиска", warehouseList, List.of("Номер", "Название", "Адрес"),
@@ -255,13 +255,16 @@ public class ConsoleUI {
         String name = reader.readString("Введите название товара: ");
         List<Product> products = productService.findByName(name);
         if (products.isEmpty()){
-            throw new IllegalArgumentException("Товаров с таким названием нет");
+            System.out.println("Товаров с таким названием нет");
+            return;
         }
         write.writeTable(
                 "Все товары", products, List.of("Номер", "Название", "Категория", "Цена", "Производитель"),
                 p -> p.getId() + " | " + p.getName() + " | " + p.getCategory() + " | " + p.getPrice() + " | " + p.getManufacturer());
         int id = reader.readInt("Введите номер выбранного товара");
+        showAllCustomers();
         int customerId = reader.readInt("Введите id покупателя: ");
+        showProductBatches();
         int warehouseId = reader.readInt("Введите id склада: ");
         int count = reader.readInt("Введите количество выбранного товара");
         try{
@@ -276,15 +279,12 @@ public class ConsoleUI {
     private void acceptStockItem(){
         System.out.println("Прием товара");
         int id = reader.readInt("Введите номер товара");
-        Product product = productService.findById(id);
-        if (product == null) {
-            System.out.println("Такого товара нет, создайте его");
+        try{
+            Product product = productService.findById(id).orElseThrow(() -> new IllegalArgumentException("Товар не найден"));
+        }catch (IllegalArgumentException e){
+            System.out.println("Ошибка:" + e.getMessage() + ". Создайте товар сначала.");
             addProduct();
-            product = productService.findById(id);
-            if (product == null) {
-                System.out.println("Ошибка: товар не создан");
-                return;
-            }
+            return;
         }
         int supplierId = reader.readInt("Введите номер поставщика");
         int warehouseId = reader.readInt("Введите номер склада");
@@ -303,14 +303,9 @@ public class ConsoleUI {
                 stockItems,
                 List.of("Номер", "Количество", "Товар", "Поставщик", "Склад"),
                 item -> {
-                    Product product = productService.findById(item.getProductId());
-                    Supplier supplier = supplierService.findById(item.getSupplierId());
-                    Warehouse warehouse = warehouseService.findById(item.getWarehouseId());
-
-                    String productName = (product != null) ? product.getName() : "id=" + item.getProductId();
-                    String supplierName = (supplier != null) ? supplier.getName() : "id=" + item.getSupplierId();
-                    String warehouseName = (warehouse != null) ? warehouse.getName() : "id=" + item.getWarehouseId();
-
+                    String productName = productService.findById(item.getProductId()).map(Product::getName).orElse("id=" + item.getProductId());
+                    String supplierName = supplierService.findById(item.getSupplierId()).map(Supplier :: getName).orElse("id=" + item.getSupplierId());
+                    String warehouseName = warehouseService.findById(item.getWarehouseId()).map(Warehouse :: getName).orElse("id=" + item.getWarehouseId());
                     return item.getId() + " | " + item.getCount() + " | " + productName + " | " + supplierName + " | " + warehouseName;
                 }
         );
@@ -323,12 +318,8 @@ public class ConsoleUI {
                 batches,
                 List.of("ID партии", "Склад", "Поставщик", "Количество"),
                 item -> {
-                    Warehouse warehouse = warehouseService.findById(item.getWarehouseId());
-                    Supplier supplier = supplierService.findById(item.getSupplierId());
-
-                    String warehouseName = (warehouse != null) ? warehouse.getName() : "id=" + item.getWarehouseId();
-                    String supplierName = (supplier != null) ? supplier.getName() : "id=" + item.getSupplierId();
-
+                    String warehouseName = warehouseService.findById(item.getWarehouseId()).map(Warehouse :: getName).orElse("id=" + item.getWarehouseId());
+                    String supplierName = supplierService.findById(item.getSupplierId()).map(Supplier :: getName).orElse("id=" + item.getSupplierId());
                     return item.getId() + " | " + warehouseName + " | " + supplierName + " | " + item.getCount();
                 }
         );
@@ -365,16 +356,13 @@ public class ConsoleUI {
         }
         Map<Integer, List<StockItem>> byWarehouse = stockItems.stream().collect(Collectors.groupingBy(item -> item.getWarehouseId()));
         for (Map.Entry<Integer, List<StockItem>> entry : byWarehouse.entrySet()){
-            Warehouse warehouse = warehouseService.findById(entry.getKey());
-            if (warehouse == null) {
-                System.out.println("\nСклад с id " + entry.getKey() + " (не найден)");
-            } else {
-                System.out.println("\nСклад " + warehouse.getName());
-            }
+            String warehouseName = warehouseService.findById(entry.getKey()).map(Warehouse :: getName).orElse("Склад id=" + entry.getKey());
+            System.out.println("Склад id=" + warehouseName);
+
             for(StockItem item : entry.getValue()){
-                Product product = productService.findById(item.getProductId());
-                Supplier supplier = supplierService.findById(item.getSupplierId());
-                System.out.printf(" - %s %d шт. от %s%n", product.getName(), item.getCount(), supplier.getName());
+                String productName = productService.findById(item.getProductId()).map(Product :: getName).orElse("Товар id=" + entry.getKey());
+                String supplierName = supplierService.findById(item.getSupplierId()).map(Supplier :: getName).orElse("Покупатель id=" + entry.getKey());
+                System.out.printf(" - %s %d шт. от %s%n", productName, item.getCount(), supplierName);
             }
         }
     }
@@ -389,10 +377,9 @@ public class ConsoleUI {
                 "Id продажи", "Дата", "Покупатель", "Состав");
         System.out.println("-----|-----------------|-----------------|----------");
         for (Sale sale : sales){
-            Customer customer = customerService.findById(sale.getCustomerId());
-            String customerName = (customer != null) ? customer.getName() : "id=" + sale.getCustomerId();
+            String customerName = customerService.findById(sale.getCustomerId()).map(Customer :: getName).orElse("id=" + sale.getCustomerId());
             String items = sale.getSaleItems().stream()
-                    .map(item -> { Product product = productService.findById(item.getProductId()); String productName = (product != null) ? product.getName() : "id=" + item.getProductId();
+                    .map(item -> { String productName = productService.findById(item.getProductId()).map(Product::getName).orElse("id=" + item.getProductId());
                         return productName + " " + item.getCount() + " шт.";
                     })
                     .collect(Collectors.joining(", "));
