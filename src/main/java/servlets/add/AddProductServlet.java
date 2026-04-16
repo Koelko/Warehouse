@@ -36,7 +36,7 @@ public class AddProductServlet extends HttpServlet {
             res.sendRedirect(req.getContextPath() + "/products");
         } catch (IllegalArgumentException e) {
             req.setAttribute("errorMessage", e.getMessage());
-            req.setAttribute("backLink", "add-product.jsp");
+            req.setAttribute("backLink", req.getContextPath()  + "/add-product");
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, res);
         }
     }

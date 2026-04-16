@@ -26,12 +26,13 @@ h2 {
 }
 
 .menu-list {
+    display: grid;
     list-style: none;
     padding: 0;
     text-align: center;
     margin: 20px 0;
+    grid-template-columns: auto auto;
 }
-
 .menu-list li {
     display: inline-block;
     margin: 8px;
@@ -53,6 +54,7 @@ h2 {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
+
 
 hr {
     border: none;

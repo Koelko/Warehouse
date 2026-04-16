@@ -35,7 +35,7 @@ public class EditCustomerServlet extends HttpServlet {
 
         } catch (Exception e) {
             req.setAttribute("error", "Ошибка: " + e.getMessage());
-            req.getRequestDispatcher("/WEB-INF/views/edit/edit-customer.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/views/edit/error.jsp").forward(req, res);
         }
     }
 }

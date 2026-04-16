@@ -37,7 +37,7 @@ public class EditProductServlet extends HttpServlet {
 
         } catch (Exception e) {
             req.setAttribute("error", "Ошибка: " + e.getMessage());
-            req.getRequestDispatcher("/WEB-INF/views/edit/edit-product.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, res);
         }
     }
 }

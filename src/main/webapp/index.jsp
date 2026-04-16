@@ -19,16 +19,16 @@
     <h2 style="text-align: center; color: #333;">Справочники</h2>
     <ul class="menu-list">
         <li><a href="${pageContext.request.contextPath}/products">Товары</a></li>
-        <li><a href="${pageContext.request.contextPath}/add-product">➕ Товар</a></li>
+        <li><a href="${pageContext.request.contextPath}/add-product">Добавить товар</a></li>
 
         <li><a href="${pageContext.request.contextPath}/suppliers">Поставщики</a></li>
-        <li><a href="${pageContext.request.contextPath}/add-supplier">➕ Поставщик</a></li>
+        <li><a href="${pageContext.request.contextPath}/add-supplier">Добавить поставщика</a></li>
 
         <li><a href="${pageContext.request.contextPath}/customers">Покупатели</a></li>
-        <li><a href="${pageContext.request.contextPath}/add-customer">➕ Покупатель</a></li>
+        <li><a href="${pageContext.request.contextPath}/add-customer">Добавить покупателя</a></li>
 
         <li><a href="${pageContext.request.contextPath}/warehouses">Склады</a></li>
-        <li><a href="${pageContext.request.contextPath}/add-warehouse">➕ Склад</a></li>
+        <li><a href="${pageContext.request.contextPath}/add-warehouse">Добавить склад</a></li>
     </ul>
 
     <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
@@ -36,10 +36,9 @@
     <h2 style="text-align: center; color: #333;">Операции</h2>
     <ul class="menu-list">
         <li><a href="${pageContext.request.contextPath}/stock">Остатки</a></li>
-        <li><a href="${pageContext.request.contextPath}/add-stock">Приёмка</a></li>
-
-        <li><a href="${pageContext.request.contextPath}/sell-goods">Продажа</a></li>
         <li><a href="${pageContext.request.contextPath}/sales">История продаж</a></li>
+        <li><a href="${pageContext.request.contextPath}/add-stock">Приёмка</a></li>
+        <li><a href="${pageContext.request.contextPath}/sell-goods">Продажа</a></li>
     </ul>
     <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
     <div style="text-align: center; font-size: 0.9em; color: #888;">

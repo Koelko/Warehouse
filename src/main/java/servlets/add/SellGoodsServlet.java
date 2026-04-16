@@ -46,11 +46,13 @@ public class SellGoodsServlet extends HttpServlet {
         } catch (IllegalArgumentException e) {
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             req.setAttribute("errorMessage", "Ошибка: " + e.getMessage());
-            req.getRequestDispatcher("/WEB-INF/views/add/sell-goods.jsp").forward(req, res);
+            req.setAttribute("backLink", req.getContextPath() + "/sell-goods");
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, res);
         } catch (Exception e) {
             res.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             req.setAttribute("errorMessage", "Ошибка: " + e.getMessage());
-            req.getRequestDispatcher("/WEB-INF/views/add/sell-goods.jsp").forward(req, res);
+            req.setAttribute("backLink", req.getContextPath() + "/sell-goods");
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, res);
         }
 
     }

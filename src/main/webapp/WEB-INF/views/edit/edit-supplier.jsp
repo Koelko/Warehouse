@@ -15,7 +15,7 @@
         <div class="error"><c:out value="${error}"/></div>
     </c:if>
 
-    <form action="${pageContext.request.contextPath}/update-product" method="post">
+    <form action="${pageContext.request.contextPath}/update-supplier" method="post">
         <input type="hidden" name="id" value="${supplier.id}">
 
         <input type="text" name="name"

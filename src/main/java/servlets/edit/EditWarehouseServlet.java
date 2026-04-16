@@ -26,7 +26,7 @@ public class EditWarehouseServlet extends HttpServlet {
            Optional<Warehouse> warehouse  = warehouseService.findById(id);
 
             if (warehouse.isPresent()) {
-                req.setAttribute("warehouse", warehouse);
+                req.setAttribute("warehouse", warehouse.get());
             } else {
                 req.setAttribute("error", "Склад не найден");
             }

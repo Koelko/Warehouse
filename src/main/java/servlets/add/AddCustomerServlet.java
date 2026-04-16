@@ -33,7 +33,7 @@ public class AddCustomerServlet extends HttpServlet {
 
         } catch (Exception e) {
             req.setAttribute("errorMessage", e.getMessage());
-            req.setAttribute("backLink", "add-customer.jsp");
+            req.setAttribute("backLink", req.getContextPath() + "/add-customer");
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, res);
         }
     }

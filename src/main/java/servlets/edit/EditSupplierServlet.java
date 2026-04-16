@@ -26,7 +26,7 @@ public class EditSupplierServlet extends HttpServlet {
             Optional<Supplier> supplier  = supplierService.findById(id);
 
             if (supplier.isPresent()) {
-                req.setAttribute("supplier", supplier);
+                req.setAttribute("supplier", supplier.get());
             } else {
                 req.setAttribute("error", "Поставщик не найден");
             }

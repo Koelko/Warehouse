@@ -34,7 +34,7 @@ public class AddWarehouseServlet extends HttpServlet {
             res.sendRedirect(req.getContextPath() + "/warehouses");
         } catch (IllegalArgumentException e) {
             req.setAttribute("errorMessage", e.getMessage());
-            req.setAttribute("backLink", "add-warehouse.jsp");
+            req.setAttribute("backLink", req.getContextPath()  + "/add-warehouse");
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, res);
         }
     }
