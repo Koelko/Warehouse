@@ -26,3 +26,6 @@
 **Доступ к данным** JDBC (MySQL) 
 **Сервер** Apache Tomcat 10.1.53
 
+## Схема базы данных
+
+![ER Diagram](db.png)
